@@ -1,8 +1,9 @@
-import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.Duration;
+import java.util.Random;
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.ClassOrderer.Random;
 import org.junit.jupiter.api.Test;
 
 public class RenshuTest {
