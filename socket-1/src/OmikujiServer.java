@@ -22,31 +22,34 @@ public class OmikujiServer {
             scanner.close();
             System.out.println("localhostの" + port + "番ポートで待機します");
             ServerSocket server = new ServerSocket(port); // ポート番号を指定し、クライアントとの接続の準備を行う
-
             Socket socket = server.accept(); // クライアントからの接続要求を待ち、
-            // 要求があればソケットを取得し接続を行う
+                // 要求があればソケットを取得し接続を行う
             System.out.println("接続しました。相手の入力を待っています......");
+            int counter = 99;
+            while(counter-->0) {
 
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
-            Omikuji omikuji = (Omikuji) ois.readObject();
+                Omikuji omikuji = (Omikuji) ois.readObject();
 
-            String name = omikuji.getName();
-            System.out.println(name + "さんからの入力を受け取りました");
+                String name = omikuji.getName();
+                if(name.equals("exit")) {
+                    ois.close();
+                    socket.close();
+                    break;
+                    
+                }
+                System.out.println(name + "さんからの入力を受け取りました");
 
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 
-            Omikuji response = new Omikuji();
-            response.setName(serverProcess(name));
+                Omikuji response = new Omikuji();
+                response.setName(serverProcess(name));
 
-            oos.writeObject(response);
-            oos.flush();
+                oos.writeObject(response);
+                oos.flush();
                 
-            ois.close();
-            oos.close();
-            // socketの終了。
-            socket.close();
-            server.close();
+            }
             
             
         }

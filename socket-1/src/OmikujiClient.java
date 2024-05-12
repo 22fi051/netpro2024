@@ -15,19 +15,19 @@ public class OmikujiClient {
             System.out.println("接続されました");
 
             System.out.println("あなたの運勢を占います");
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            
 
             int counter = 99;
             while(counter-->0) {
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                 System.out.println("あなたの名前を入力してください");
                 String name = scanner.next();
 
                 if(name.equals("exit")) {
                     scanner.close();
                     oos.close();
-                    if (!socket.isClosed()) {
-                        socket.close();
-                    }
+                    socket.close();
+                    System.out.println("終了します");
                     break;
                 }
                 
