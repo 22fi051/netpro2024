@@ -1,38 +1,37 @@
 package thread;
 
-public class CountAZTenRunnable implements Runnable {
+import java.util.concurrent.Semaphore;
+
+public class CountAZTenRunnable {
+
     public static void main(String[] args) {
-        char c1 = 97;
-        char c2 = (char) (c1 + 1);
+        Thread[] threads = new Thread[26];
+        Semaphore[] semaphores = new Semaphore[26];
 
-        System.out.println(c1);
-        System.out.println(c2);
+        for(int i = 0; i < 26; i++) {
+            semaphores[i] = new Semaphore(i == 0 ? 1 : 0);
+        }
 
-        CountAZTenRunnable ct = new CountAZTenRunnable();
+        for(int i = 0; i < threads.length; i++) {
+            final int threadNum = i;
+            final Semaphore currentSemaphore = semaphores[i];
+            final Semaphore nextSemaphore = semaphores[(i + 1) % 26];
+            threads[i] = new Thread(() -> {
+                try {
+                    currentSemaphore.acquire();
+                    for(int j = 1; j <= 10; j++) {
+                        System.out.println((char)('a' + threadNum) + String.valueOf(j));
+                        Thread.sleep(100);
+                    }
+                    nextSemaphore.release();
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
 
-        Thread t1 = new Thread(ct);
-
-        t1.start();
-
-        try {
-            for (int i=0; i < 10;i++) {
-                System.out.println(i);
-                Thread.sleep(500);
-            }
-        } catch(InterruptedException e) {
-            System.err.println(e);
+        for(Thread thread : threads) {
+            thread.start();
         }
     }
-
-    public void run() {
-        try {
-            for(int i = 0; i < 10;i++) {
-                System.out.println(i);
-                Thread.sleep(1000);
-            }
-        } catch(InterruptedException e) {
-            System.err.println(e);
-        }
-    }
-
 }
