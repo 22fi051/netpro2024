@@ -23,7 +23,7 @@ public class SwingAnimationFaceObj extends JPanel implements ActionListener {
 	private double counter;
 	private Timer timer;
 
-	private int ballnum = 2;
+	private int ballnum = 5;
 	private BallRim[] myBalls = new BallRim[ballnum];
 
 	public static void main(String[] args) {
@@ -239,6 +239,7 @@ public class SwingAnimationFaceObj extends JPanel implements ActionListener {
 
 		int xStart = 0;
 		int yStart = 0;
+		
 
 		public void setXY(int x, int y){
 			this.xStart = x;
@@ -275,12 +276,12 @@ public class SwingAnimationFaceObj extends JPanel implements ActionListener {
 			//setColor(Color.red);
 			//g.fillRect(xStart + (h * 1 / 3) - 20, yStart + (w * 1 / 3) - 10,
 			//		10, 10);
-			g.setColor(Color.blue);
+			//g.setColor(Color.blue);
 
 			// g.fillRoundRect()
 			// g.fillOval()
-			g.fillArc(xStart + (h * 2/ 7) , yStart + (w * 1 / 3), eyeSize,
-					eyeSize, 0, 300);
+			//g.fillArc(xStart + (h * 2/ 7) , yStart + (w * 1 / 3), eyeSize,
+			//		eyeSize, 0, 300);
 			g.setColor(Color.black);
 
 			//g.drawLine(xStart + (h * 1 / 3) - 20, yStart + (w * 1 / 3) - 10,
